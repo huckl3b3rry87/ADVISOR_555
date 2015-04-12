@@ -2,7 +2,6 @@
 clear all
 clc
 
-
 SetAdvisorPath;
 %Pass the vehicle
 input.init.saved_veh_file='EV_defaults_in';
@@ -46,17 +45,22 @@ input.modify.param = {'acc_elec_pwr'};
 input.modify.value = {3200};
 [error_code,resp] = adv_no_gui('modify',input)
 
+% Modify the number of Battery Modules
+input.modify.param = {'ess_module_num'};
+input.modify.value = {400};
+[error_code,resp] = adv_no_gui('modify',input)
+
 dv_names={'mc_trq_scale','mc_spd_scale','ess_module_num','ess_cap_scale','fd_ratio'};
 
 %         mc_trq_scale              mc_spd_scale                   ess_module_num
-x_L=[1*mc_trq_scale,           1*mc_spd_scale,            2.5*ess_module_num,        0.5*fd_ratio]';
-x_U=[2.5*mc_trq_scale,        2.5*mc_spd_scale,           10*ess_module_num,         2.5*fd_ratio]';
-
+x_L=[1*mc_trq_scale,           1*mc_spd_scale,            0.5*ess_module_num,        0.5*fd_ratio]'
+x_U=[2.5*mc_trq_scale,        2.5*mc_spd_scale,           2*ess_module_num,         2.5*fd_ratio]'
+%%
 %       delta_soc   delta_trace   vinf.accel_test.results.time(1)    vinf.grade_test.results.grade
 c_L=[     0;             0;                    0;                                         5];
 c_U=[     1;             2;                    12;                                        5];
 
-n = 30000;
+n = 150;
 dv = 4;
 X_temp = lhsdesign(n,dv);
 
@@ -77,8 +81,8 @@ for nn = 1:n
     [error,~]=adv_no_gui('modify',input);
     
     if ~error
-        input.cycle.param = {'cycle.name','cycle.soc'};
-        input.cycle.value = {'CYC_UDDS','off'}; % Really the ann arbor cycle
+        input.cycle.param = {'cycle.name','cycle.soc','cycle.number'};
+        input.cycle.value = {'CYC_UDDS','off',8}; 
         [error1,resp] = adv_no_gui('drive_cycle', input);
     end
     
@@ -135,8 +139,11 @@ for nn = 1:n
     end
 end
 
+cd('large_555')
 if rr > 1
 eval(['save(''','l_MPG',''',','''MPG'');'])
 eval(['save(''','l_Delta_SOC',''',','''delta_SOC'');'])
 eval(['save(''','l_DV',''',','''X_save'');'])
+
+manip_data;
 end

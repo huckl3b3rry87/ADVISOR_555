@@ -46,17 +46,23 @@ input.modify.param = {'acc_elec_pwr'};
 input.modify.value = {400};
 [error_code,resp] = adv_no_gui('modify',input)
 
+% Modify the number of Battery Modules
+input.modify.param = {'ess_module_num'};
+input.modify.value = {100};
+[error_code,resp] = adv_no_gui('modify',input)
+
 dv_names={'mc_trq_scale','mc_spd_scale','ess_module_num','ess_cap_scale','fd_ratio'};
 
 %         mc_trq_scale              mc_spd_scale                   ess_module_num
-x_L=[0.5*mc_trq_scale,          0.5*mc_spd_scale,             0.5*ess_module_num,        0.5*fd_ratio]';
-x_U=[1.5*mc_trq_scale,          1.5*mc_spd_scale,             1.5*ess_module_num,        1.5*fd_ratio]';
+x_L=[0.5*mc_trq_scale,          0.5*mc_spd_scale,               0.5*ess_module_num,        0.5*fd_ratio]'
+x_U=[1.5*mc_trq_scale,          1.5*mc_spd_scale,               2*ess_module_num,        1.5*fd_ratio]'
+%%
 
 %       delta_soc   delta_trace   vinf.accel_test.results.time(1)    vinf.grade_test.results.grade
 c_L=[     0;             0;                    0;                                         5];
 c_U=[     1;             2;                    7;                                         5];
 
-n = 30000;
+n = 150;
 dv = 4;
 X_temp = lhsdesign(n,dv);
 
@@ -77,8 +83,8 @@ for nn = 1:n
     [error,~]=adv_no_gui('modify',input);
     
     if ~error
-        input.cycle.param = {'cycle.name','cycle.soc'};
-        input.cycle.value = {'CYC_WVUINTER','off'}; % Really the ann arbor cycle
+        input.cycle.param = {'cycle.name','cycle.soc','cycle.number'};
+        input.cycle.value = {'CYC_WVUINTER','off',21}; % Really the ann arbor cycle
         [error1,resp] = adv_no_gui('drive_cycle', input);
     end
     
@@ -135,6 +141,7 @@ for nn = 1:n
     end
 end
 
+cd('small_555')
 if rr > 1
 eval(['save(''','MPG',''',','''MPG'');'])
 eval(['save(''','Delta_SOC',''',','''delta_SOC'');'])
