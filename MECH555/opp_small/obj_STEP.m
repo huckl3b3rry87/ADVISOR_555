@@ -16,16 +16,14 @@ if ~error
     [error1,resp] = adv_no_gui('drive_cycle', input);
 end
 
-f=1;
-
 % assign objective value
-if ~error1
+if ~error
     obj= abs(resp.cycle.delta_soc);  
 end
 
 % assign constraint value
-if ~error1
-   assignin('base','con', [abs(resp.cycle.delta_soc);max(resp.cycle.delta_trace)])
+if ~error
+   assignin('base','con', max(resp.cycle.delta_trace))
 end
 
 return

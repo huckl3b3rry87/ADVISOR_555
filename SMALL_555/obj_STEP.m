@@ -16,11 +16,13 @@ if ~error
     [error1,resp] = adv_no_gui('drive_cycle', input);
 end
 
-f=1;
+% Calculate Battery cost
+B_cost = x(3)*battery.capacity*battery.voltage*1e-3*cost_battery;
+E_cost = resp.cycle.mpgge*cost_electricity;
 
 % assign objective value
 if ~error1
-    obj= abs(resp.cycle.delta_soc);  
+    obj= B_cost + E_cost;  
 end
 
 % assign constraint value

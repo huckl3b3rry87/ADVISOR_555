@@ -1,6 +1,7 @@
-%% Large Electric
+%% Small Electric
 clear all
 clc
+
 
 SetAdvisorPath;
 %Pass the vehicle
@@ -16,7 +17,7 @@ input.init.comp_files.type ={''};
 
 % Modify the Vehicle Parameters
 input.modify.param = {'veh_cargo_mass','veh_glider_mass','veh_FA','veh_CD'};
-input.modify.value = {800,1804,3.51,0.35};
+input.modify.value = {280,396,1.7,0.18};
 [error_code,resp] = adv_no_gui('modify',input)
 
 % Change to a Lithium Ion Battery
@@ -28,7 +29,7 @@ input.init.comp_files.type ={'li'};
 
 % Change the Motor
 input.init.comp_files.comp = {'motor_controller'};
-input.init.comp_files.name = {'MC_PM100_UQM'};
+input.init.comp_files.name = {'MC_PM58'};
 input.init.comp_files.ver = {''};
 input.init.comp_files.type = {''};
 [error_code,resp]=adv_no_gui('initialize',input);
@@ -42,23 +43,24 @@ input.init.comp_files.type = {'Const'};
 
 % Modify the Accesory load
 input.modify.param = {'acc_elec_pwr'};
-input.modify.value = {3200};
+input.modify.value = {400};
 [error_code,resp] = adv_no_gui('modify',input)
 
 % Modify the number of Battery Modules
 input.modify.param = {'ess_module_num'};
-input.modify.value = {400};
+input.modify.value = {100};
 [error_code,resp] = adv_no_gui('modify',input)
 
 dv_names={'mc_trq_scale','mc_spd_scale','ess_module_num','ess_cap_scale','fd_ratio'};
 
 %         mc_trq_scale              mc_spd_scale                   ess_module_num
-x_L=[1*mc_trq_scale,           1*mc_spd_scale,            0.5*ess_module_num,        0.5*fd_ratio]'
-x_U=[2.5*mc_trq_scale,        2.5*mc_spd_scale,           2*ess_module_num,         2.5*fd_ratio]'
+x_L=[0.5*mc_trq_scale,          0.5*mc_spd_scale,               0.5*ess_module_num,        0.5*fd_ratio]'
+x_U=[1.5*mc_trq_scale,          1.5*mc_spd_scale,               2*ess_module_num,        1.5*fd_ratio]'
 %%
+
 %       delta_soc   delta_trace   vinf.accel_test.results.time(1)    vinf.grade_test.results.grade
 c_L=[     0;             0;                    0;                                         5];
-c_U=[     1;             2;                    12;                                        5];
+c_U=[     1;             2;                    7;                                         5];
 
 n = 150;
 dv = 4;
@@ -82,7 +84,7 @@ for nn = 1:n
     
     if ~error
         input.cycle.param = {'cycle.name','cycle.soc','cycle.number'};
-        input.cycle.value = {'CYC_UDDS','off',8}; 
+        input.cycle.value = {'CYC_WVUINTER','off',21}; % Really the ann arbor cycle
         [error1,resp] = adv_no_gui('drive_cycle', input);
     end
     
@@ -96,7 +98,7 @@ for nn = 1:n
     
     % Run Acceleration Test
     input.accel.param={'spds','disable_systems','disp_results'};
-    input.accel.value={[0 60],0,1};
+    input.accel.value={[0 20],0,1};
     [error2, acc_time]=adv_no_gui('accel_test',input);
     if ~error2 && ~isempty(acc_time.accel.times)
         con(3) = acc_time.accel.times;
@@ -106,7 +108,7 @@ for nn = 1:n
     
     % Run the Grade Test
     input.grade.param={'duration','speed','grade','disable_systems','ess_init_soc','ess_min_soc'};
-    input.grade.value={100,55,5,0,1,0.3};
+    input.grade.value={100,15,5,0,1,0.3};
     [error3, grade]=adv_no_gui('grade_test',input);
     if ~error3 && ~isempty(grade.grade.grade)
         con(4) = grade.grade.grade;
@@ -139,10 +141,9 @@ for nn = 1:n
     end
 end
 
-cd('large_555')
+cd('small_555')
 if rr > 1
-eval(['save(''','l_MPG',''',','''MPG'');'])
-eval(['save(''','l_Delta_SOC',''',','''delta_SOC'');'])
-eval(['save(''','l_DV',''',','''X_save'');'])
-
+eval(['save(''','MPG',''',','''MPG'');'])
+eval(['save(''','Delta_SOC',''',','''delta_SOC'');'])
+eval(['save(''','DV',''',','''X_save'');'])
 end

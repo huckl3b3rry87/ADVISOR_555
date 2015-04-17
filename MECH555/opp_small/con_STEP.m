@@ -15,9 +15,11 @@ input.accel.value={[0 20],0,1};
 [error, resp]=adv_no_gui('accel_test',input);
 
 if ~error&~isempty(resp.accel.times)
-    con(3,1)=resp.accel.times(1);
+    con(offset+1,1)=resp.accel.times(1);
+    con(offset+2,1)=resp.accel.times(2);
+    con(offset+3,1)=resp.accel.times(3);
 else
-   con(3,1)=100;
+   con(offset+1:offset+3,1)=100;
 end
 
 % run grade test
@@ -25,9 +27,9 @@ input.grade.param={'duration','speed','grade','disable_systems','ess_init_soc','
 input.grade.value={100,15,5,0,1,0.3};
 [error, resp]=adv_no_gui('grade_test',input);
 if ~error&~isempty(resp.grade.grade)
-    con(4,1)=resp.grade.grade;
+    con(offset+4,1)=resp.grade.grade;
 else
-    con(4,1)=0;
+    con(offset+4,1)=0;
 end
 
 % matlab only
@@ -42,6 +44,4 @@ if length(varargin)>3
 end
 con_e=0;
 % ****
-con
-
 return
