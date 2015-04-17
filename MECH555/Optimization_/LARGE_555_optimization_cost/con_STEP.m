@@ -11,7 +11,7 @@ offset=length(con);
 
 % run acceleration test
 input.accel.param={'spds','disable_systems','disp_results'};
-input.accel.value={[0 20],0,1};
+input.accel.value={[0 60],0,1};
 [error, resp]=adv_no_gui('accel_test',input);
 
 if ~error&~isempty(resp.accel.times)
@@ -22,7 +22,7 @@ end
 
 % run grade test
 input.grade.param={'duration','speed','grade','disable_systems','ess_init_soc','ess_min_soc'};
-input.grade.value={100,15,5,0,1,0.3};
+input.grade.value={100,55,5,0,1,0.3};
 [error, resp]=adv_no_gui('grade_test',input);
 if ~error&~isempty(resp.grade.grade)
     con(4,1)=resp.grade.grade;
