@@ -1,4 +1,4 @@
-% small_electric_STEP_in.m  ADVISOR 2003-00-r0116 input file created: 17-Apr-2015 18:46:54
+% small_electric_STEP_in.m  ADVISOR 2003-00-r0116 input file created: 17-Apr-2015 19:35:08
 
 global vinf 
 
@@ -25,30 +25,30 @@ vinf.powertrain_control.type='man';
 vinf.accessory.name='ACC_HYBRID';
 vinf.accessory.ver='Const';
 vinf.accessory.type='Const';
-vinf.variables.name{1}='veh_cargo_mass';
-vinf.variables.value(1)=800;
-vinf.variables.default(1)=280;
-vinf.variables.name{2}='veh_glider_mass';
-vinf.variables.value(2)=1804;
-vinf.variables.default(2)=396;
-vinf.variables.name{3}='veh_FA';
-vinf.variables.value(3)=3.51;
-vinf.variables.default(3)=1.7;
-vinf.variables.name{4}='veh_CD';
-vinf.variables.value(4)=0.35;
-vinf.variables.default(4)=0.18;
-vinf.variables.name{5}='acc_elec_pwr';
-vinf.variables.value(5)=3200;
-vinf.variables.default(5)=3200;
-vinf.variables.name{6}='ess_module_num';
-vinf.variables.value(6)=500;
-vinf.variables.default(6)=25;
-vinf.variables.name{7}='mc_trq_scale';
-vinf.variables.value(7)=2.25;
-vinf.variables.default(7)=1;
-vinf.variables.name{8}='mc_spd_scale';
-vinf.variables.value(8)=1.75;
+vinf.variables.name{1}='ess_module_num';
+vinf.variables.value(1)=500;
+vinf.variables.default(1)=25;
+vinf.variables.name{2}='mc_trq_scale';
+vinf.variables.value(2)=5.2499;
+vinf.variables.default(2)=1;
+vinf.variables.name{3}='mc_spd_scale';
+vinf.variables.value(3)=4.0833;
+vinf.variables.default(3)=1;
+vinf.variables.name{4}='veh_cargo_mass';
+vinf.variables.value(4)=800;
+vinf.variables.default(4)=280;
+vinf.variables.name{5}='veh_glider_mass';
+vinf.variables.value(5)=1804;
+vinf.variables.default(5)=396;
+vinf.variables.name{6}='veh_FA';
+vinf.variables.value(6)=3.51;
+vinf.variables.default(6)=1.7;
+vinf.variables.name{7}='veh_CD';
+vinf.variables.value(7)=0.35;
+vinf.variables.default(7)=0.18;
+vinf.variables.name{8}='fd_ratio';
+vinf.variables.value(8)=2.25;
 vinf.variables.default(8)=1;
-vinf.variables.name{9}='fd_ratio';
-vinf.variables.value(9)=1.5;
-vinf.variables.default(9)=1;
+vinf.variables.name{9}='acc_elec_pwr';
+vinf.variables.value(9)=3200;
+vinf.variables.default(9)=3200;

@@ -18,7 +18,7 @@ input.modify.value=num2cell(x); % assign corresponding values
 % run city/hwy test procedure
 if ~error
     input.cycle.param = {'cycle.name','cycle.soc','cycle.number'};
-    input.cycle.value = {'CYC_WVUINTER','off',21}; % Really the ann arbor cycle
+    input.cycle.value = {'CYC_UDDS','off',8}; % Really the ann arbor cycle
     [error1,resp] = adv_no_gui('drive_cycle', input);
 end
 

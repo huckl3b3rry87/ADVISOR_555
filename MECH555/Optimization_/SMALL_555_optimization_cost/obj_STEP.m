@@ -3,7 +3,12 @@ function obj=obj_STEP(x,varargin)
 % initialize
 error=0;
 obj=0;
-
+ % Costs
+    cost_electricity = 0.11;    % Electricity cost = 11 cents/kWh
+    cost_battery = 500;         % Battery cost = $500/kWh
+    battery.capacity = 7;       % Battery capacity = 7 A-h
+    battery.voltage = 7;        % Battery voltage = 7 V
+    
 % update parameter settings
 input.modify.param={'mc_trq_scale','mc_spd_scale','ess_module_num','fd_ratio'}; % parameter names are stored in the first optional argument
 input.modify.value=num2cell(x); % assign corresponding values
