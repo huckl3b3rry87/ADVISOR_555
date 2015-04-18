@@ -1,4 +1,4 @@
-% small_electric_STEP_in.m  ADVISOR 2003-00-r0116 input file created: 17-Apr-2015 19:35:08
+% small_electric_STEP_in.m  ADVISOR 2003-00-r0116 input file created: 17-Apr-2015 20:09:09
 
 global vinf 
 
@@ -29,10 +29,10 @@ vinf.variables.name{1}='ess_module_num';
 vinf.variables.value(1)=500;
 vinf.variables.default(1)=25;
 vinf.variables.name{2}='mc_trq_scale';
-vinf.variables.value(2)=5.2499;
+vinf.variables.value(2)=2.9999;
 vinf.variables.default(2)=1;
 vinf.variables.name{3}='mc_spd_scale';
-vinf.variables.value(3)=4.0833;
+vinf.variables.value(3)=2.3333;
 vinf.variables.default(3)=1;
 vinf.variables.name{4}='veh_cargo_mass';
 vinf.variables.value(4)=800;
@@ -47,8 +47,5 @@ vinf.variables.name{7}='veh_CD';
 vinf.variables.value(7)=0.35;
 vinf.variables.default(7)=0.18;
 vinf.variables.name{8}='fd_ratio';
-vinf.variables.value(8)=2.25;
+vinf.variables.value(8)=1.5;
 vinf.variables.default(8)=1;
-vinf.variables.name{9}='acc_elec_pwr';
-vinf.variables.value(9)=3200;
-vinf.variables.default(9)=3200;

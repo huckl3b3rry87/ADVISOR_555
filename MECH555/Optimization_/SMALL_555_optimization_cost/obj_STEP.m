@@ -3,11 +3,12 @@ function obj=obj_STEP(x,varargin)
 % initialize
 error=0;
 obj=0;
- % Costs
-    cost_electricity = 0.11;    % Electricity cost = 11 cents/kWh
-    cost_battery = 500;         % Battery cost = $500/kWh
-    battery.capacity = 7;       % Battery capacity = 7 A-h
-    battery.voltage = 7;        % Battery voltage = 7 V
+
+% Costs
+cost_electricity = 0.11;    % Electricity cost = 11 cents/kWh
+cost_battery = 500;         % Battery cost = $500/kWh
+battery.capacity = 7;       % Battery capacity = 7 A-h
+battery.voltage = 7;        % Battery voltage = 7 V
     
 % update parameter settings
 input.modify.param={'mc_trq_scale','mc_spd_scale','ess_module_num','fd_ratio'}; % parameter names are stored in the first optional argument
@@ -21,18 +22,16 @@ if ~error
     [error1,resp] = adv_no_gui('drive_cycle', input);
 end
 
-% Calculate Battery cost
-B_cost = x(3)*battery.capacity*battery.voltage*1e-3*cost_battery;
-E_cost = resp.cycle.mpgge*cost_electricity;
-
-% assign objective value
-if ~error1
+% assign constraint value and assign objective value
+if ~error1 && ~isempty(resp.cycle.delta_soc) && ~isempty(resp.cycle.delta_trace) && ~error 
+    % Calculate Battery cost
+    B_cost = x(3)*battery.capacity*battery.voltage*1e-3*cost_battery;
+    E_cost = resp.cycle.mpgge*cost_electricity;
     obj= B_cost + E_cost;  
-end
-
-% assign constraint value
-if ~error1
-   assignin('base','con', [abs(resp.cycle.delta_soc);max(resp.cycle.delta_trace)])
+    assignin('base','con', [abs(resp.cycle.delta_soc);max(resp.cycle.delta_trace)])
+else
+    assignin('base','con', [100;100]) % Fail it
+    obj = 10^20;
 end
 
 return

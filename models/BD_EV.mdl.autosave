@@ -33,7 +33,7 @@ Model {
   LastModifiedBy	  "mokeefe"
   ModifiedDateFormat	  "%<Auto>"
   LastModifiedDate	  "Fri Mar 23 15:18:43 2012"
-  RTWModifiedTimeStamp	  351200107
+  RTWModifiedTimeStamp	  351202148
   ModifiedComment	  "mokeefe -- Fri Mar 23 15:18:43 2012 -- Version 1.38\nUpdated parameterized link to restore librar"
   "y link. Save to update to newset Simulink version."
   ModifiedHistory	  "mokeefe -- Fri Mar 23 15:18:43 2012 -- Version 1.38\nUpdated parameterized link to restore librar"

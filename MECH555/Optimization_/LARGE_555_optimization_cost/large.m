@@ -54,16 +54,15 @@ input.modify.value = {400};
 dv_names={'mc_trq_scale','mc_spd_scale','ess_module_num','ess_cap_scale','fd_ratio'};
 
 %         mc_trq_scale              mc_spd_scale                   ess_module_num
-x_L=[1*mc_trq_scale,           1*mc_spd_scale,            0.5*ess_module_num,        0.5*fd_ratio]'
-x_U=[2.5*mc_trq_scale,        2.5*mc_spd_scale,           2*ess_module_num,         2.5*fd_ratio]'
-
-%       delta_soc   delta_trace   vinf.accel_test.results.time(1)    vinf.grade_test.results.grade
-c_L=[     0;             0;                    0;                                         5];
-c_U=[     1.1;             2;                    12;                                        5];
+x_L=[1*mc_trq_scale,           1*mc_spd_scale,            0.5*ess_module_num,        0.5*fd_ratio]';
+x_U=[2.5*mc_trq_scale,        2.5*mc_spd_scale,           2*ess_module_num,         2.5*fd_ratio]';
 
 con_names={'delta_soc','delta_trace','vinf.accel_test.results.time(1)','vinf.grade_test.results.grade'};
+%       delta_soc   delta_trace   vinf.accel_test.results.time(1)    vinf.grade_test.results.grade
+c_L=[     0;             0;                    0;                                         5];
+c_U=[     1;             2;                    12;                                        5];
 
-resp_names={'Distance Large EV'};
+resp_names={'Cost Large EV'};
 
 % define the problem
 cont_bool=0;
@@ -74,11 +73,10 @@ A=[];
 b_L=[];
 b_U=[];
 
-
 I=[];
 PriLev=2;
-MaxEval=1000;
-MaxIter=999;
+MaxEval=4;
+MaxIter=3;
 GLOBAL.epsilon=1e-4;
 prev_results_filename='small_dist_MECH_555';
 
