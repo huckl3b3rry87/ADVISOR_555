@@ -75,8 +75,8 @@ b_U=[];
 
 I=[];
 PriLev=2;
-MaxEval=4;
-MaxIter=3;
+MaxEval=500;
+MaxIter=499;
 GLOBAL.epsilon=1e-4;
 prev_results_filename='small_dist_MECH_555';
 
